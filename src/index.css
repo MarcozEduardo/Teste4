@@ -1,0 +1,267 @@
+@import "tailwindcss";
+
+:root {
+  --px: 5px;
+  --ink: #1a1033;
+  --paper: #fff6e8;
+  --bg-deep: #191d3a;
+  --btn: #e8503c;
+  --btn-light: #ff9a70;
+  --btn-shade: #a32e24;
+  --gold: #ffd23f;
+  --mint: #7ce0a3;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  font-family: "Press Start 2P", "Courier New", monospace;
+  color: var(--paper);
+  background-color: var(--bg-deep);
+  /* dither quadriculado sutil, como textura de jogo antigo */
+  background-image: conic-gradient(
+    rgba(255, 246, 232, 0.03) 25%,
+    transparent 0 50%,
+    rgba(255, 246, 232, 0.03) 0 75%,
+    transparent 0
+  );
+  background-size: 14px 14px;
+  overflow: hidden;
+}
+
+/* ---------- palco ---------- */
+
+.stage {
+  position: relative;
+  min-height: 100dvh;
+  display: grid;
+  place-items: center;
+  overflow: hidden;
+}
+
+/* brilho quente atrás do botão + vinheta de CRT */
+.stage::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(circle at 50% 52%, rgba(232, 80, 60, 0.17), transparent 42%),
+    radial-gradient(circle at 50% 46%, rgba(255, 210, 63, 0.07), transparent 60%);
+}
+
+.stage::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse at center,
+    transparent 52%,
+    rgba(10, 8, 24, 0.55) 100%
+  );
+}
+
+.scanlines {
+  position: fixed;
+  inset: 0;
+  z-index: 30;
+  pointer-events: none;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(9, 7, 20, 0.17) 0 2px,
+    transparent 2px 4px
+  );
+}
+
+/* ---------- flutuação "de sprite" ---------- */
+
+.bobber {
+  position: relative;
+  z-index: 10;
+  animation: bob 0.7s steps(1, end) infinite alternate;
+}
+
+@keyframes bob {
+  to {
+    transform: translateY(calc(var(--px) * -1));
+  }
+}
+
+/* ---------- o botão ---------- */
+
+.pixel-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: calc(var(--px) * 3);
+  padding: calc(var(--px) * 4) calc(var(--px) * 6);
+  border: 0;
+  font-family: inherit;
+  font-size: clamp(14px, 2.6vw, 22px);
+  line-height: 1;
+  color: var(--paper);
+  background: var(--btn);
+  cursor: pointer;
+  overflow: hidden;
+  -webkit-tap-highlight-color: transparent;
+  user-select: none;
+  text-shadow: 3px 3px 0 rgba(26, 16, 51, 0.9);
+  /* contorno externo em 4 sombras = cantos "mordidos" de pixel
+     + bisel claro em cima/esquerda e escuro embaixo/direita */
+  box-shadow:
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 0 var(--ink),
+    inset var(--px) var(--px) 0 0 var(--btn-light),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--btn-shade);
+  transition:
+    transform 60ms steps(1, end),
+    box-shadow 60ms steps(1, end),
+    filter 120ms steps(2, end);
+}
+
+.pixel-btn:hover {
+  filter: brightness(1.13) saturate(1.06);
+}
+
+.pixel-btn:focus-visible {
+  outline: 3px dashed var(--gold);
+  outline-offset: calc(var(--px) * 2);
+}
+
+.pixel-btn:active,
+.pixel-btn.is-hit {
+  transform: translateY(var(--px));
+  filter: brightness(0.94);
+  box-shadow:
+    calc(var(--px) * -1) 0 0 0 var(--ink),
+    var(--px) 0 0 0 var(--ink),
+    0 calc(var(--px) * -1) 0 0 var(--ink),
+    0 var(--px) 0 0 0 var(--ink),
+    inset var(--px) var(--px) 0 0 var(--btn-shade),
+    inset calc(var(--px) * -1) calc(var(--px) * -1) 0 0 var(--btn-light);
+}
+
+/* varredura de brilho periódica */
+.pixel-btn::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    115deg,
+    transparent 38%,
+    rgba(255, 246, 232, 0.3) 46%,
+    rgba(255, 246, 232, 0.3) 54%,
+    transparent 62%
+  );
+  transform: translateX(-140%);
+  animation: shine 3.8s steps(16, end) infinite;
+}
+
+@keyframes shine {
+  0% {
+    transform: translateX(-140%);
+  }
+  55%,
+  100% {
+    transform: translateX(140%);
+  }
+}
+
+/* setinha de menu RPG, piscando */
+.cursor-arrow {
+  position: relative;
+  z-index: 2;
+  width: 12px;
+  height: 21px;
+  flex: none;
+  fill: var(--gold);
+  filter: drop-shadow(2px 2px 0 rgba(26, 16, 51, 0.9));
+  animation: blink 1.1s linear infinite;
+}
+
+@keyframes blink {
+  0%,
+  55% {
+    opacity: 1;
+  }
+  56%,
+  100% {
+    opacity: 0;
+  }
+}
+
+/* rótulo: duas camadas empilhadas para trocar o texto sem mudar a largura */
+.btn-label {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  white-space: nowrap;
+}
+
+.lbl {
+  grid-area: 1 / 1;
+  transition: opacity 60ms steps(1, end);
+}
+
+.lbl-alt {
+  opacity: 0;
+  justify-self: center;
+  color: var(--gold);
+}
+
+.is-hit .lbl-main {
+  opacity: 0;
+}
+
+.is-hit .lbl-alt {
+  opacity: 1;
+}
+
+/* ---------- partículas de clique ---------- */
+
+.particles {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  pointer-events: none;
+}
+
+.pixel-particle {
+  position: absolute;
+  animation: px-pop 0.75s steps(9, end) forwards;
+  animation-delay: var(--delay);
+}
+
+@keyframes px-pop {
+  0% {
+    transform: translate(0, 0);
+    opacity: 1;
+  }
+  75% {
+    opacity: 1;
+  }
+  100% {
+    transform: translate(var(--dx), var(--dy));
+    opacity: 0;
+  }
+}
+
+/* ---------- acessibilidade: menos movimento ---------- */
+
+@media (prefers-reduced-motion: reduce) {
+  .bobber,
+  .pixel-btn::before,
+  .cursor-arrow {
+    animation: none;
+  }
+}
