@@ -1,5 +1,174 @@
+```
+# Environment
+.env
+.env.local
+.env.*
+
+# Logs and temp files
+*.log
+*.tmp
+*.swp
+
+# Editors
+.vscode/
+.idea/
+
+# Dependencies
+.venv/
+venv/
 node_modules/
-.next/
+
+# Build artifacts
 dist/
 build/
-*.log
+target/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Java
+*.class
+*.jar
+*.war
+*.ear
+*.war
+*.sar
+*.zip
+*.war
+*.ear
+*.har
+*.kpl
+*.ktr
+*.dsl
+*.class
+*.jar
+*.war
+*.ear
+*.har
+*.kpl
+*.ktr
+*.dsl
+
+# C/C++
+*.o
+*.obj
+*.exe
+*.dll
+*.so
+*.a
+*.lib
+*.out
+
+# Go
+*.exe
+*.test
+*.prof
+
+# Ruby
+*.gem
+*.rbc
+*.sass-cache
+.bundle/
+vendor/bundle/
+
+# Node.js
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+node_modules/
+
+# Bower
+bower_components/
+
+# Gradle
+.gradle/
+build/
+
+# Maven
+target/
+
+# Coverage reports
+coverage/
+*.lcov
+*.clover
+*.gcda
+*.gcno
+
+# Testing
+.rspec
+spec/reports/
+test/tmp/
+test/version_tmp/
+tmp/
+
+# OS generated files
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# IDE
+*.swp
+*.swo
+*~
+.project
+.classpath
+.settings/
+*.sublime-project
+*.sublime-workspace
+nbproject/
+nbbuild/
+nbdist/
+nbreleases/
+*.kdev4
+*.komodoproject
+*.pydevproject
+*.wtpdiscard
+*.flexLibProperties
+*.iml
+*.ipr
+*.iws
+*.cbp
+*.layout
+*.vcxproj.filters
+*.sln
+*.csproj
+*.user
+*.userosscache
+*.suo
+*.lock
+*.VC.db
+*.VC.VC.opendb
+*.opensdf
+*.sdf
+*.pidb
+*.opendb
+*.VC.opendb
+*.VC.db
+*.ncb
+*.aps
+*.ilk
+*.iobj
+*.ipdb
+*.pdb
+*.pgc
+*.pgd
+*.bsc
+*.sbr
+*.cache
+*.obj
+*.res
+*.pch
+*.tlb
+*.tli
+*.tlh
+*.tmp
+*.rsp
+*.vuepress/dist
+```
